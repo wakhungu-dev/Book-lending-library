@@ -3,8 +3,16 @@
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
+  interface BorrowedBook {
+    _id: string;
+    book: {
+      title: string;
+      author: string;
+    };
+  }
+
   const [books, setBooks] = useState([]);
-  const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState<BorrowedBook[]>([]);
   const [userId, setUserId] = useState(""); // Store logged-in user ID
 
   useEffect(() => {
@@ -59,7 +67,7 @@ export default function Dashboard() {
     }
   };
 
- const handleReturn = async (id: string) => {
+ const returnBook = async (id: string) => {
   try {
     const res = await fetch(`/api/return/${id}`, { method: "POST" });
     if (res.ok) {
@@ -70,6 +78,7 @@ export default function Dashboard() {
   } catch (error) {
     console.error("Error returning book:", error);
   }
+};
 
   return (
     <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
@@ -100,7 +109,7 @@ export default function Dashboard() {
       <div className="mt-6">
         <h2 className="text-xl font-semibold">Your Borrowed Books 🏷️</h2>
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          {borrowedBooks.map((borrow: any) => (
+          {borrowedBooks.map((borrow: BorrowedBook) => (
             <li key={borrow._id} className="bg-white p-4 rounded-lg shadow-md">
               <p className="text-xl font-semibold">{borrow.book.title}</p>
               <p className="text-gray-600">by {borrow.book.author}</p>
