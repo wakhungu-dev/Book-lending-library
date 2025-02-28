@@ -20,7 +20,7 @@ export default function Home() {
 
       <p className="mt-4">
         Already have an account?  
-        <Link href="/login" className="text-blue-500 hover:underline ml-2">
+        <Link href="/dashboard" className="text-blue-500 hover:underline ml-2">
           Login here
         </Link>
       </p>

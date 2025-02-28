@@ -107,22 +107,31 @@ export default function Dashboard() {
 
       {/* Borrowed Books */}
       <div className="mt-6">
-        <h2 className="text-xl font-semibold">Your Borrowed Books 🏷️</h2>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          {borrowedBooks.map((borrow: BorrowedBook) => (
-            <li key={borrow._id} className="bg-white p-4 rounded-lg shadow-md">
-              <p className="text-xl font-semibold">{borrow.book.title}</p>
-              <p className="text-gray-600">by {borrow.book.author}</p>
-              <button
-                onClick={() => returnBook(borrow._id)}
-                className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
-              >
-                Return
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+  <h2 className="text-xl font-semibold">Your Borrowed Books 🏷️</h2>
+
+  {borrowedBooks.length === 0 ? (
+    <p className="text-gray-500 mt-2">You haven&apos;t borrowed any books yet.</p>
+  ) : (
+    <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+      {borrowedBooks.map((borrow: BorrowedBook) => (
+        <li key={borrow._id} className="bg-white p-4 rounded-lg shadow-md">
+          <p className="text-xl font-semibold">
+            {borrow?.book?.title || "Unknown Title"}
+          </p>
+          <p className="text-gray-600">
+            {borrow?.book?.author || "Unknown Author"}
+          </p>
+          <button
+            onClick={() => returnBook(borrow._id)}
+            className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+          >
+            Return
+          </button>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
     </div>
   );
 }
